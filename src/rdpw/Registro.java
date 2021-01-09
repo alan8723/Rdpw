@@ -6,7 +6,7 @@ import java.util.Scanner;
 import rdpw.BD.RegistroDao;
 
 public class Registro {
-    //en este metodo registramos un nuevo partido modificanto a su vez las estadisticas de los equipos que juegan
+    //en este metodo registramos un nuevo partido, modificanto a su vez las estadisticas de los equipos que juegan
     public static Partidos nuevoRegistroPartido(Equipo local, Equipo visitante, int goles_local, int goles_visitante, String tipo_partido){
         Partidos pAux = new Partidos();
         
@@ -31,17 +31,17 @@ public class Registro {
                 local.setPartidos_perdidos((local.getPartidos_perdidos()+1));
                 visitante.setPartidos_ganados((local.getPartidos_ganados()+1));
             }else if(goles_local == goles_visitante){
-                local.setPartidos_jugados((local.getPartidos_jugados()+1));
-                visitante.setPartidos_jugados((local.getPartidos_jugados()+1));
+                local.setPartidos_empatados(local.getPartidos_empatados() +1);
+                visitante.setPartidos_empatados((visitante.getPartidos_empatados()+1));
             }
-        /*RegistroDao.editarEquipoDB(local);
+        RegistroDao.editarEquipoDB(local);
         RegistroDao.editarEquipoDB(visitante);
-        RegistroDao.subirPartidoDB(pAux);*/
+        RegistroDao.subirPartidoDB(pAux);
         //retorna el partido jugado
         return pAux;
         
     }
-    
+    //en este metodo borramos un nuevo partido, modificanto a su vez las estadisticas de los equipos que juegan
     public static void borrarRegistro(ArrayList<Partidos> partidos, ArrayList<Equipo> equipos){
         Scanner sc = new Scanner(in);
         System.out.println("Elija el id del partido que quire borrar");
@@ -71,9 +71,9 @@ public class Registro {
             visitante.setPartidos_empatados(visitante.getPartidos_empatados() -1);
         }
         
-        /*borrarPartido(partidoAux);
+        borrarPartido(partidoAux);
         editarEquipo(local);
-        editarEquipo(visitante);*/
+        editarEquipo(visitante);
         
     }
     
@@ -156,7 +156,7 @@ public class Registro {
         Scanner sc = new Scanner(in);
         int option = Integer.valueOf(sc.nextLine());
         if(option == 1){
-            //RegistroDao.borrarPartidoDB(partido);
+            RegistroDao.borrarPartidoDB(partido);
             return true;
         }else{
             System.out.println("se a canselado");
@@ -167,9 +167,9 @@ public class Registro {
     public static void crearEquipo(ArrayList<Equipo> equipos,String name){
           
         Equipo equipo = new Equipo(name);
-        //RegistroDao.subirEquipoDB(equipo);
-        //ArrayList<Equipo> eAux =RegistroDao.traerEquipo();
-        //equipos.add(eAux.get(eAux.size()-1));
+        RegistroDao.subirEquipoDB(equipo);
+        ArrayList<Equipo> eAux =RegistroDao.traerEquipo();
+        equipos.add(eAux.get(eAux.size()-1));
         equipo.setId_equipo(equipos.size());
         equipos.add(equipo);
     }
@@ -179,7 +179,7 @@ public class Registro {
         System.out.println("Ingrese nombre del equipo");
         String nombre = sc.nextLine();
         e.setNombre(nombre);
-        //RegistroDao.editarEquipoDB(e);
+        RegistroDao.editarEquipoDB(e);
     }   
     
     public static void mostrarEquipos(ArrayList<Equipo> equipos){

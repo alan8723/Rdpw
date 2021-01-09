@@ -10,8 +10,8 @@ import tools.Tools;
 
 public class UImenu {
     public static void menuPrincipal(ArrayList<Equipo> e, ArrayList<Partidos> p){
-        //e = RegistroDao.traerEquipo();
-        //p = RegistroDao.traerPartidos();
+        e = RegistroDao.traerEquipo();
+        p = RegistroDao.traerPartidos();
         Scanner sc = new Scanner(System.in);
         int option;
         do{
